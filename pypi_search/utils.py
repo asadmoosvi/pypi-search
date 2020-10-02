@@ -1,14 +1,20 @@
+from typing import Optional, Dict
 from bs4 import BeautifulSoup
+from bs4.element import ResultSet
 import requests
 from requests.exceptions import HTTPError
 import json
 import html2text
 
+from pypi_search.log import init_logger
+
+logger = init_logger(__name__)
+
 
 class PyPiPage():
     def __init__(self, package_name: str) -> None:
         self.package_name = package_name.lower().strip()
-        self.response = requests.get(
+        self.response: Optional[requests.Response] = requests.get(
             f'http://pypi.org/project/{self.package_name}'
         )
         try:
@@ -21,13 +27,17 @@ class PyPiPage():
         else:
             self.soup = BeautifulSoup(self.response.text, 'html.parser')
 
-    def found(self):
+    def found(self) -> bool:
         if self.soup:
             return True
         else:
             return False
 
-    def get_version_info(self):
+    def get_version_info(self) -> Optional[Dict[str, str]]:
+        if not self.soup:
+            logger.error('PyPi page not found. Cannot get version info')
+            return None
+
         package_name_header = self.soup.find('h1', class_='package-header__name')
         version_no = package_name_header.text.split()[1]
         package_date_header = self.soup.find(
@@ -39,7 +49,7 @@ class PyPiPage():
             'release_date': release_date
         }
 
-    def get_project_links(self):
+    def get_project_links(self) -> Dict[str, str]:
         # project links are in the second sidebar section
         sidebar_sections = self._get_sidebar_sections()
         links_section = sidebar_sections[1]
@@ -50,7 +60,7 @@ class PyPiPage():
         }
         return links
 
-    def get_github_stats(self):
+    def get_github_stats(self) -> Optional[Dict[str, int]]:
         # github stats are in the third sidebar section
         sidebar_sections = self._get_sidebar_sections()
         github_stats = sidebar_sections[2].find('div', class_='github-repo-info')
@@ -68,7 +78,7 @@ class PyPiPage():
         }
         return github_stats_dict
 
-    def get_meta_info(self):
+    def get_meta_info(self) -> Dict[str, str]:
         # meta info is the fourth sidebar section
         sidebar_sections = self._get_sidebar_sections()
         meta_stats = sidebar_sections[3]
@@ -90,12 +100,16 @@ class PyPiPage():
             results_dict[key] = value
         return results_dict
 
-
-    def get_project_description(self):
+    def get_project_description(self) -> Optional[str]:
+        if not self.soup:
+            logger.error('Cannot get project description. PyPi page does not exist')
+            return None
         description_div = self.soup.find('div', id='description')
         return html2text.html2text(str(description_div)).strip()
 
-
-    def _get_sidebar_sections(self):
+    def _get_sidebar_sections(self) -> ResultSet:
+        if not self.soup:
+            logger.error('_get_sidebar_sections (self.soup does not exist)')
+            return None
         sidebar_sections = self.soup.find_all('div', class_='sidebar-section')
         return sidebar_sections
