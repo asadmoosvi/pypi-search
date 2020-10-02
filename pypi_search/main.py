@@ -1,0 +1,52 @@
+from pypi_search.utils import PyPiPage
+from pypi_search.arg_parser import parse_args
+from pypi_search.log import init_logger
+from typing import Optional, Sequence
+import sys
+
+logger = init_logger(__name__)
+
+
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    argv = argv if argv is not None else sys.argv[1:]
+    args = parse_args(argv)
+
+    logger.info(f'Searching for package `{args.search}`...')
+    pypi = PyPiPage(args.search)
+    if not pypi.found():
+        logger.error(f'Could not find package `{args.search}`')
+        return 1
+
+    version_info = pypi.get_version_info()
+    project_links = pypi.get_project_links()
+    github_stats = pypi.get_github_stats()
+    meta_info = pypi.get_meta_info()
+
+    print(f'\n\t[{args.search.lower()}]')
+    print('\nVersion Information:')
+    print(f"    - version number: {version_info['version_no']}")
+    print(f"    - release date  : {version_info['release_date']}")
+    print("Project Links:")
+    for link_name, link in project_links.items():
+        print(f"    - {link_name}: {link}")
+    if github_stats:
+        print("Github Stats:")
+        for key, val in github_stats.items():
+            print(f"    - {key}: {val}")
+    print("Meta Information")
+    for key, val in meta_info.items():
+        if key == 'author':
+            val = (
+                f"\n        name: {val['name']}"
+                f"\n        email: {val['email']}"
+            )
+        print(f"    - {key}: {val}")
+
+    if args.description:
+        print('=' * 120 + '\n')
+        print(pypi.get_project_description())
+
+    return 0
+
+if __name__ == '__main__':
+    exit(main())
