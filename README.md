@@ -13,6 +13,8 @@ the PyPI website.
 
 # usage
 
+[![asciicast](https://asciinema.org/a/JTlNXr0PrfDT9exEDkGQeklGz.svg)](https://asciinema.org/a/JTlNXr0PrfDT9exEDkGQeklGz)
+
 In order to use the package you need to run the `main.py` as a module. So after
 going into the top level directory of this repo, you can run `python -m pypi_search.main query` where
 `query` is the package you want the information for. By default it doesn't fetch the long
