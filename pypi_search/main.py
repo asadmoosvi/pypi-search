@@ -16,6 +16,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     pypi = PyPiPage(args.search)
     if not pypi.found():
         logger.info(f'Could not find package `{args.search}`')
+        logger.info('Searching for other packages that match that query...')
         packages_found = find_packages(args.search)
         if packages_found:
             print(f'\nHere are some packages that match `{args.search}`:')
@@ -26,6 +27,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 print(f"Version      : {pkg['version']}")
                 print(f"Release date : {pkg['release_date']}")
                 print(f"Description  : {pkg['description']}\n")
+        else:
+            logger.info('No packages found')
         return 1
 
     version_info = pypi.get_version_info()
