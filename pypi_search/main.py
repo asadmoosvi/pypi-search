@@ -43,6 +43,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"    - {key}: {val}")
 
     if args.description:
+        print()
         print('=' * 120 + '\n')
         print(pypi.get_project_description())
 
