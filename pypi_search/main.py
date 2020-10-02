@@ -1,6 +1,7 @@
 from pypi_search.utils import PyPiPage
 from pypi_search.arg_parser import parse_args
 from pypi_search.log import init_logger
+from pypi_search.search import find_packages
 from typing import Optional, Sequence
 import sys
 
@@ -14,7 +15,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     logger.info(f'Searching for package `{args.search}`...')
     pypi = PyPiPage(args.search)
     if not pypi.found():
-        logger.error(f'Could not find package `{args.search}`')
+        logger.info(f'Could not find package `{args.search}`')
+        packages_found = find_packages(args.search)
+        if packages_found:
+            print(f'\nHere are some packages that match `{args.search}`:')
+            print('=' * 50)
+            print()
+            for pkg in packages_found:
+                print(f"Name         : {pkg['name']}")
+                print(f"Version      : {pkg['version']}")
+                print(f"Release date : {pkg['release_date']}")
+                print(f"Description  : {pkg['description']}\n")
         return 1
 
     version_info = pypi.get_version_info()
