@@ -11,19 +11,30 @@ It fetches the following information:
 It quickly allows you to know what a package is all about without having to open up
 the PyPI website.
 
+# installation
+
+To get the latest stable release from PyPI:
+- `pip install pypi-search`
+
+To get the latest dev release, go into the root of this project and run:
+- `pip install .`
+
 # usage
 
 [![asciicast](https://asciinema.org/a/JTlNXr0PrfDT9exEDkGQeklGz.svg)](https://asciinema.org/a/JTlNXr0PrfDT9exEDkGQeklGz)
 
-In order to use the package you need to run the `main.py` as a module. So after
-going into the top level directory of this repo, you can run `python -m pypi_search.main query` where
-`query` is the package you want the information for. By default it doesn't fetch the long
-description for the package. In order to fetch that you can use the `-d` flag.
+get information on a package called `foo`:
+---
+`pypisearch foo`
+
+get information on a package called `foo` along with its long description:
+---
+`pypisearch -d foo`
 
 ## help menu
 
 ```
-usage: main.py [-h] [-d] search
+usage: pypisearch [-h] [-d] search
 
 Search for PyPi packages
 
@@ -38,5 +49,5 @@ optional arguments:
 
 # todo
 
-In order to make this easier to use I will be making a package out of this
+- [x] In order to make this easier to use I will be making a package out of this
 so it can easily be installed via `pip`.
