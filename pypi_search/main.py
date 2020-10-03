@@ -47,7 +47,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print("Github Stats:")
         for key, val in github_stats.items():
             print(f"    - {key}: {val}")
-    print("Meta Information")
+    print("Meta Information:")
     for key, val in meta_info.items():
         if key == 'author':
             val = (
