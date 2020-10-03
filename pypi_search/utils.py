@@ -107,6 +107,14 @@ class PyPiPage():
         description_div = self.soup.find('div', id='description')
         return html2text.html2text(str(description_div)).strip()
 
+    def get_project_description_summary(self) -> Optional[str]:
+        if not self.soup:
+            logger.error('Cannot get description summary. PyPI page does not exist.')
+            return None
+
+        summary = self.soup.find('p', class_='package-description__summary')
+        return summary.text
+
     def _get_sidebar_sections(self) -> ResultSet:
         if not self.soup:
             logger.error('_get_sidebar_sections (self.soup does not exist)')

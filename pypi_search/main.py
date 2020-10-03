@@ -36,7 +36,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     github_stats = pypi.get_github_stats()
     meta_info = pypi.get_meta_info()
 
-    print(f'\n[{args.search.lower()}]')
+    summary = pypi.get_project_description_summary()
+    print(f'\n{args.search.lower()}:')
+    print(f'    - {summary}')
     print('\nVersion Information:')
     print(f"    - version number: {version_info['version_no']}")
     print(f"    - release date  : {version_info['release_date']}")
