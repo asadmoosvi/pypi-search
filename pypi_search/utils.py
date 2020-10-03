@@ -71,10 +71,16 @@ class PyPiPage():
         github_stats_json = json.loads(
             requests.get(github_data_url).text
         )
+        stars = github_stats_json.get('stargazers_count')
+        forks = github_stats_json.get('forks_count')
+        issues = github_stats_json.get('open_issues_count')
+        if stars is None or forks is None or issues is None:
+            return None
+
         github_stats_dict = {
-            'stars': github_stats_json['stargazers_count'],
-            'forks': github_stats_json['forks_count'],
-            'issues': github_stats_json['open_issues_count'],
+            'stars': stars,
+            'forks': forks,
+            'issues': issues,
         }
         return github_stats_dict
 
