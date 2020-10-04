@@ -3,7 +3,7 @@ from pypi_search.arg_parser import parse_args
 from pypi_search.log import init_logger
 from pypi_search.search import find_packages
 from typing import Optional, Sequence
-import sys
+import sys, os
 
 logger = init_logger(__name__)
 
@@ -20,8 +20,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         packages_found = find_packages(args.search)
         if packages_found:
             print(f'\nHere are some packages that match `{args.search}`:')
-            print('=' * 50)
-            print()
+            print('=' * os.get_terminal_size().columns + '\n')
             for pkg in packages_found:
                 print(f"Name         : {pkg['name']}")
                 print(f"Version      : {pkg['version']}")
@@ -60,7 +59,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.description:
         print()
-        print('=' * 120 + '\n')
+        print('=' * os.get_terminal_size().columns + '\n')
         print(pypi.get_project_description())
 
     return 0
