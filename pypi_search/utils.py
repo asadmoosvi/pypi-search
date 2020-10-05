@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from bs4.element import ResultSet
 import requests
 from requests.exceptions import HTTPError
-import json
 import html2text
 
 from pypi_search.log import init_logger
@@ -68,9 +67,8 @@ class PyPiPage():
             return None
 
         github_data_url = github_stats['data-url']
-        github_stats_json = json.loads(
-            requests.get(github_data_url).text
-        )
+        github_stats_json = requests.get(github_data_url).json()
+
         stars = github_stats_json.get('stargazers_count')
         forks = github_stats_json.get('forks_count')
         issues = github_stats_json.get('open_issues_count')
