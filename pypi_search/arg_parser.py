@@ -1,5 +1,6 @@
 import argparse
 from typing import Sequence
+from pypi_search import __version__
 
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
@@ -8,6 +9,10 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     parser.add_argument(
         '-d', '--description', help='Show package description',
         action='store_true'
+    )
+    parser.add_argument(
+        '--version', action='version',
+        version=f'%(prog)s {__version__}'
     )
     args = parser.parse_args(argv)
     return args
