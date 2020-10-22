@@ -1,4 +1,5 @@
 # pypi-search
+[![Downloads](https://static.pepy.tech/personalized-badge/pypi-search?period=month&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/pypi-search)
 
 pypi-search allows you to quickly query packages on PyPI.
 It fetches the following information:
