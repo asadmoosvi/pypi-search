@@ -4,6 +4,8 @@ from pypi_search.log import init_logger
 from pypi_search.search import find_packages
 from typing import Optional, Sequence
 import sys, os
+import webbrowser
+
 
 logger = init_logger(__name__)
 
@@ -36,6 +38,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     meta_info = pypi.get_meta_info()
 
     summary = pypi.get_project_description_summary()
+    homepage_url = None
     print(f'\n{args.search.lower()}:')
     print(f'    - {summary}')
     print('\nVersion Information:')
@@ -44,6 +47,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print("Project Links:")
     for link_name, link in project_links.items():
         print(f"    - {link_name}: {link}")
+        if link_name == 'Homepage':
+            homepage_url = link
     if github_stats:
         print("Github Stats:")
         for key, val in github_stats.items():
@@ -61,6 +66,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print()
         print('=' * os.get_terminal_size().columns + '\n')
         print(pypi.get_project_description())
+
+    if args.open:
+        print()
+        if homepage_url:
+            logger.info(f"Opening homepage `{homepage_url}` in default browser.")
+            webbrowser.open(homepage_url)
+        else:
+            logger.info("No homepage available.")
+
 
     return 0
 

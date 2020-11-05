@@ -14,5 +14,10 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         '--version', action='version',
         version=f'%(prog)s {__version__}'
     )
+    parser.add_argument(
+        '-o', '--open',
+        action='store_true',
+        help='Open homepage in browser'
+    )
     args = parser.parse_args(argv)
     return args
