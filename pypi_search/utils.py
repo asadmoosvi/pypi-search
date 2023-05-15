@@ -60,13 +60,11 @@ class PyPiPage():
         return links
 
     def get_github_stats(self) -> Optional[Dict[str, int]]:
-        # github stats are in the third sidebar section
-        sidebar_sections = self._get_sidebar_sections()
-        github_stats = sidebar_sections[2].find('div', class_='github-repo-info')
+        github_stats = self.soup.find('div', {'data-controller': 'github-repo-stats'})
         if not github_stats:
             return None
 
-        github_data_url = github_stats['data-url']
+        github_data_url = github_stats['data-github-repo-stats-url-value']
         github_stats_json = requests.get(github_data_url).json()
 
         stars = github_stats_json.get('stargazers_count')
