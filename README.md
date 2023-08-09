@@ -9,8 +9,7 @@ It fetches the following information:
 - Meta Information (author, maintainer)
 - Description
 
-It quickly allows you to know what a package is all about without having to open up
-the PyPI website.
+It allows you to know what a package is all about without having to open up the PyPI website.
 
 # installation
 
@@ -50,5 +49,4 @@ optional arguments:
 
 # todo
 
-- [x] In order to make this easier to use I will be making a package out of this
-so it can easily be installed via `pip`.
+- [x] Create python package.
