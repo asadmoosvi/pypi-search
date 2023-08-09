@@ -27,7 +27,7 @@ get information on a package called `foo`:
 ---
 `pypisearch foo`
 
-get information on a package called `foo` along with its long description:
+get information on a package called `foo` along with its description:
 ---
 `pypisearch -d foo`
 
