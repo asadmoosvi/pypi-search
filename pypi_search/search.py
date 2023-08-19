@@ -5,7 +5,7 @@ import requests
 
 def find_packages(query: str) -> Optional[List[Dict[str, str]]]:
     query = '+'.join(query.split())
-    response = requests.get(f'http://pypi.org/search/?q={query}')
+    response = requests.get(f'https://pypi.org/search/?q={query}')
     if response.status_code != requests.codes.ok:
         return None
 
