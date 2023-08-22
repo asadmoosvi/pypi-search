@@ -1,11 +1,11 @@
 import setuptools
 
 
-with open('README.md') as f:
+with open("README.md") as f:
     long_description = f.read()
 
-with open('requirements.txt') as req_f:
-    install_requires=req_f.read().split()
+with open("requirements.txt") as req_f:
+    install_requires = req_f.read().split()
 
 setuptools.setup(
     name="pypi-search",
@@ -25,7 +25,5 @@ setuptools.setup(
     license="MIT",
     python_requires=">=3.6",
     install_requires=install_requires,
-    entry_points= {
-        "console_scripts": ["pypisearch=pypi_search.main:main"]
-    }
+    entry_points={"console_scripts": ["pypi-search=pypi_search.main:main"]},
 )
