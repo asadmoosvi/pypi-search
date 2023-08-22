@@ -9,7 +9,7 @@ with open("requirements.txt") as req_f:
 
 setuptools.setup(
     name="pypi-search",
-    version="1.2.2",
+    version="2.0",
     author="Asad Moosvi",
     author_email="moosvi.asad@gmail.com",
     description="Get Information on Python Packages From PyPI",
