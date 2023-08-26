@@ -1,4 +1,5 @@
 import setuptools
+from pypi_search import __version__
 
 
 with open("README.md") as f:
@@ -9,7 +10,7 @@ with open("requirements.txt") as req_f:
 
 setuptools.setup(
     name="pypi-search",
-    version="2.0",
+    version=__version__,
     author="Asad Moosvi",
     author_email="moosvi.asad@gmail.com",
     description="Get Information on Python Packages From PyPI",
