@@ -25,16 +25,16 @@ To get the latest dev release, go into the root of this project and run:
 
 get information on a package called `foo`:
 ---
-`pypisearch foo`
+`pypi-search foo`
 
 get information on a package called `foo` along with its description:
 ---
-`pypisearch -d foo`
+`pypi-search -d foo`
 
 ## help menu
 
 ```
-usage: pypisearch [-h] [-d] search
+usage: pypi-search [-h] [-d] search
 
 Search for PyPi packages
 
